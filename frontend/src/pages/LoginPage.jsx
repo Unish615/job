@@ -32,7 +32,11 @@ const LoginPage = () => {
         navigate(location.state?.from?.pathname || '/job-seeker/dashboard');
       }
     } catch (err) {
-      const msg = err.response?.data?.message || 'Invalid email or password';
+      const msg =
+        err.response?.data?.message ||
+        (err.code === 'ERR_NETWORK' || !err.response
+          ? 'Unable to connect to backend server. Please check connection.'
+          : 'Invalid email or password');
       setError(msg);
     } finally {
       setLoading(false);
